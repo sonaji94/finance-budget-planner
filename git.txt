@@ -1,0 +1,26 @@
+Git Commands:
+
+git init
+git add file name 
+git commit -m "message"
+git push orign main/git push
+
+git Clone Commands:
+git clone <Github url>
+
+git push commands:
+git add .
+git commit -m "message"
+git push
+
+
+git branch commands:
+git branch <branchname>
+git checkout <branchname>
+git merge <branch name>
+
+config your repo to local machine:
+git remote add orign <Github url>
+
+hit push
+git pull
