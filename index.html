@@ -2,95 +2,196 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
   <style>
-    /* General Styles */
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      background: #f7f9fa;
+      color: #222;
+      transition: background 0.3s, color 0.3s;
     }
-
+    body.dark-mode {
+      background: #181c1f;
+      color: #e0e0e0;
+    }
     header {
-      background-color: #4CAF50;
+      background: linear-gradient(90deg, #4CAF50 60%, #388e3c 100%);
       color: white;
-      padding: 1rem;
+      padding: 1.5rem 1rem 1rem 1rem;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.08);
+      border-radius: 0 0 18px 18px;
     }
-
+    .dark-mode header {
+      background: linear-gradient(90deg, #263238 60%, #37474f 100%);
+      color: #fff;
+    }
     main {
-      padding: 1rem;
+      padding: 1.5rem 1rem;
       max-width: 800px;
       margin: auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(60,60,60,0.10);
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      transition: background 0.3s, color 0.3s;
     }
-
+    .dark-mode main {
+      background: #23272b;
+      color: #e0e0e0;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+    }
     h1 {
       text-align: center;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
     }
-
     .form-container {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
+      background: #f2f2f2;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.05);
+      align-items: center;
+      transition: background 0.3s;
     }
-
+    .dark-mode .form-container {
+      background: #2c3136;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
     .form-container input, .form-container button {
-      padding: 0.5rem;
+      padding: 0.6rem;
       font-size: 1rem;
+      border-radius: 8px;
+      border: 1px solid #bbb;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
     }
-
+    .form-container input:focus {
+      border: 1.5px solid #4CAF50;
+      box-shadow: 0 0 0 2px #c8e6c9;
+    }
+    .dark-mode .form-container input {
+      background: #23272b;
+      color: #e0e0e0;
+      border: 1px solid #444;
+    }
     .form-container input {
       flex: 1;
-      min-width: 150px;
+      min-width: 120px;
     }
-
     .form-container button {
-      background-color: #4CAF50;
+      background: linear-gradient(90deg, #4CAF50 60%, #388e3c 100%);
       color: white;
       border: none;
       cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.08);
+      transition: background 0.2s, box-shadow 0.2s;
     }
-
     .form-container button:hover {
-      background-color: #45a049;
+      background: linear-gradient(90deg, #45a049 60%, #357a38 100%);
+      box-shadow: 0 4px 16px rgba(60,60,60,0.12);
     }
-
+    .dark-mode .form-container button {
+      background: linear-gradient(90deg, #263238 60%, #37474f 100%);
+      color: #fff;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 1rem;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.06);
+      background: #fafbfc;
+      transition: background 0.3s;
     }
-
+    .dark-mode table {
+      background: #23272b;
+      color: #e0e0e0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
     table, th, td {
-      border: 1px solid #ddd;
+      border: 1px solid #e0e0e0;
     }
-
+    .dark-mode table, .dark-mode th, .dark-mode td {
+      border: 1px solid #444;
+    }
     th, td {
-      padding: 0.5rem;
+      padding: 0.7rem 0.5rem;
       text-align: left;
     }
-
     th {
-      background-color: #f2f2f2;
+      background: #e8f5e9;
+      font-weight: 600;
     }
-
+    .dark-mode th {
+      background: #263238;
+      color: #fff;
+    }
     .total {
       text-align: right;
       font-weight: bold;
-      margin-top: 1rem;
+      margin-top: 1.5rem;
+      font-size: 1.2rem;
     }
-
+    .dark-mode .total {
+      color: #a5d6a7;
+    }
+    .dark-mode ::placeholder {
+      color: #aaa;
+    }
+    .toggle-dark-btn {
+      position: absolute;
+      top: 1.2rem;
+      right: 2rem;
+      background: #fff;
+      color: #222;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.3rem;
+      box-shadow: 0 2px 8px rgba(60,60,60,0.10);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      z-index: 10;
+    }
+    .toggle-dark-btn:hover {
+      background: #4CAF50;
+      color: #fff;
+    }
+    .dark-mode .toggle-dark-btn {
+      background: #263238;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
     @media (max-width: 600px) {
       .form-container {
         flex-direction: column;
+      }
+      main {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0.5rem;
+      }
+      .toggle-dark-btn {
+        right: 1rem;
+        top: 1rem;
       }
     }
   </style>
 </head>
 <body>
+  <button class="toggle-dark-btn" id="toggle-dark-btn" title="Toggle dark mode">🌙</button>
   <header>
     <h1>Expense Tracker</h1>
   </header>
@@ -103,12 +204,14 @@
     <div class="form-container">
       <input type="text" id="expense-name" placeholder="Expense Name">
       <input type="number" id="expense-amount" placeholder="Amount">
+      <input type="date" id="expense-date" placeholder="Date">
       <button onclick="addExpense()">Add Expense</button>
     </div>
 
     <table>
       <thead>
         <tr>
+          <th>Date</th>
           <th>Expense Name</th>
           <th>Amount</th>
         </tr>
@@ -127,20 +230,23 @@
     function addExpense() {
       const nameInput = document.getElementById('expense-name');
       const amountInput = document.getElementById('expense-amount');
+      const dateInput = document.getElementById('expense-date');
       const tableBody = document.getElementById('expense-table-body');
       const totalAmountSpan = document.getElementById('total-amount');
 
       const expenseName = nameInput.value.trim();
       const expenseAmount = parseFloat(amountInput.value);
+      const expenseDate = dateInput.value;
 
-      if (expenseName === '' || isNaN(expenseAmount) || expenseAmount <= 0) {
-        alert('Please enter a valid expense name and amount.');
+      if (expenseName === '' || isNaN(expenseAmount) || expenseAmount <= 0 || !expenseDate) {
+        alert('Please enter a valid expense name, amount, and date.');
         return;
       }
 
       // Add a new row to the table
       const newRow = document.createElement('tr');
       newRow.innerHTML = `
+        <td>${expenseDate}</td>
         <td>${expenseName}</td>
         <td>$${expenseAmount.toFixed(2)}</td>
       `;
@@ -153,7 +259,28 @@
       // Clear the input fields
       nameInput.value = '';
       amountInput.value = '';
+      dateInput.value = '';
     }
+
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('toggle-dark-btn');
+    toggleBtn.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      if(document.body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = '☀️';
+        localStorage.setItem('fintrack-dark', '1');
+      } else {
+        toggleBtn.textContent = '🌙';
+        localStorage.setItem('fintrack-dark', '0');
+      }
+    });
+    // On load, set dark mode if previously enabled
+    window.addEventListener('DOMContentLoaded', function() {
+      if(localStorage.getItem('fintrack-dark') === '1') {
+        document.body.classList.add('dark-mode');
+        toggleBtn.textContent = '☀️';
+      }
+    });
   </script>
 </body>
 </html>
