@@ -2,13 +2,158 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Expense Tracker</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    main {
+      padding: 1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .form-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-container input, .form-container button {
+      padding: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .form-container input {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .form-container button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th, td {
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Expense Tracker</h1>
-  <p>Short description: A small project to track expenses and plan budgets.</p>
-  <p>Name: SONAJI PAWAR</p>
-  <p>Roll number: ROLL-12345</p>
-  <p><strong>This is my finance project</strong></p>
+  <header>
+    <h1>Expense Tracker</h1>
+  </header>
+  <main>
+    <p>Short description: A small project to track expenses and plan budgets.</p>
+    <p>Name: SONAJI PAWAR</p>
+    <p>Roll number: ROLL-12345</p>
+    <p><strong>This is my finance project</strong></p>
+
+    <div class="form-container">
+      <input type="text" id="expense-name" placeholder="Expense Name">
+      <input type="number" id="expense-amount" placeholder="Amount">
+      <button onclick="addExpense()">Add Expense</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Expense Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody id="expense-table-body">
+        <!-- Expenses will be added here dynamically -->
+      </tbody>
+    </table>
+
+    <p class="total">Total: $<span id="total-amount">0</span></p>
+  </main>
+
+  <script>
+    let totalAmount = 0;
+
+    function addExpense() {
+      const nameInput = document.getElementById('expense-name');
+      const amountInput = document.getElementById('expense-amount');
+      const tableBody = document.getElementById('expense-table-body');
+      const totalAmountSpan = document.getElementById('total-amount');
+
+      const expenseName = nameInput.value.trim();
+      const expenseAmount = parseFloat(amountInput.value);
+
+      if (expenseName === '' || isNaN(expenseAmount) || expenseAmount <= 0) {
+        alert('Please enter a valid expense name and amount.');
+        return;
+      }
+
+      // Add a new row to the table
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${expenseName}</td>
+        <td>$${expenseAmount.toFixed(2)}</td>
+      `;
+      tableBody.appendChild(newRow);
+
+      // Update the total amount
+      totalAmount += expenseAmount;
+      totalAmountSpan.textContent = totalAmount.toFixed(2);
+
+      // Clear the input fields
+      nameInput.value = '';
+      amountInput.value = '';
+    }
+  </script>
 </body>
 </html>
